@@ -12,7 +12,7 @@
 <body>
 
 <nav class="navbar navbar-light bg-light">
-  <a href="" class="navbar-brand"><img src="img/camera.png" class="img_cam">Camagru</a>
+  <a href="camagru_disconnect.php" class="navbar-brand"><img src="img/camera.png" class="img_cam">Camagru</a>
   <form class="form-inline">
     <a href="index.php" class="btn_connexion" style="text-decoration:none; color:#3897EF;">Créer un compte</a>
     <a href="connexion.php" class="btn_account" style="text-decoration:none; color:#3897EF;">Connexion</a>

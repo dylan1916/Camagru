@@ -16,9 +16,8 @@
   <form class="form-inline">
     <a href="modify_account.php" class="btn_connexion" style="text-decoration:none; color:#3897EF;">Mon compte</a>
     <a href="webcam.php" class="btn_connexion" style="text-decoration:none; color:#3897EF;">Webcam</a>
-    <a href="index.php" class="btn_account" style="text-decoration:none; color:#3897EF;">Déconnexion</a>
+    <a href="deconnexion.php" class="btn_account" style="text-decoration:none; color:#3897EF;">Déconnexion</a>
   </form>
 </nav>
-
 </body>
 </html>
