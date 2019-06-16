@@ -45,6 +45,15 @@ try
         id_images INT (11) NOT NULL,
         id_pseudo INT (11) NOT NULL)");
 
+    //tables commmentaire
+    $bdd->query("CREATE TABLE commentaire(
+        id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+        pseudo VARCHAR(255) NOT NULL,
+        commentaire TEXT NOT NULL,
+        id_images INT (11) NOT NULL,
+        creation DATETIME NOT NULL
+    )");
+
 }
 catch (Exception $error)
 {

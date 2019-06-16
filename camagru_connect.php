@@ -1,8 +1,11 @@
- <?php
+<?php
  session_start();
  require('includes/header1.php');
  require('includes/footer.php');
  require('config/database.php');
+
+
+
 
 //  if (isset($_GET['id']) AND $_GET['id'] > 0)
 // {
@@ -55,6 +58,17 @@ while($d = $req->fetch(PDO::FETCH_OBJ)):
     $dislikes = $bdd->prepare("SELECT id FROM dislikes WHERE id_images = ?");
     $dislikes->execute(array($d->id));
     $dislikes = $dislikes->rowCOunt();
+
+
+    // commentaire
+
+    echo $_SESSION['pseudo'];
+    $pseudo = $_SESSION['pseudo'];
+    $idImg= $d->id;
+    echo $idImg;
+    // $idUtilisateur = $_SESSION['id'];
+    // echo $idUtilisateur;
+
 ?>
 
 
@@ -74,9 +88,20 @@ while($d = $req->fetch(PDO::FETCH_OBJ)):
     </ul>
     <!-- commentaire -->
         <p class="card-text" align="left">Ajouter un commentaire ...<br/><br/><br/>
-            Pour liker ou commenter veuillez
-            vous <a id="link" href="connexion.php">connectez</a> ou <a id="link" href="index.php">céer un compte</a>.
         </p>
+
+
+    <!-- commentaire -->
+  <!-- <form action="" method="POST">
+        <input name="commentaire" type="text" size="63" placeholder="Ajouter un commentaire"><br/><br/>
+        <input type="hidden" name="pseudo">
+        <input type="submit" value="Valider" class="btn btn-outline-primary" name="submit_commentaire" onclick="myFunction()">
+    </form> -->
+
+    <a style="text-decoration:none;" href="add_comment.php?id=<?php echo $idImg ?>"><input type="submit" value="Ajouter un commentaire" class="btn btn-outline-primary" name="add_commentaire"></a>
+
+    <!-- //// -->
+
     </div>
     </div>
     <br/><br/><br/>

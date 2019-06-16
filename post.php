@@ -1,15 +1,14 @@
 <?php
-// session_start();
+session_start();
 require('config/database.php');
 
-// echo $_SESSION['id'];
+$idUtilisateur = $_SESSION['id'];
 
 if (isset($_POST['pic']))
 {
-    // $sessionid = $_SESSION['id'];
     $pic = strip_tags($_POST['pic']);
-    $req = $bdd->prepare('INSERT INTO images (data, date_creation, id_pseudo) VALUES (:pic, NOW(), 90)');
-    $req->execute(array(':pic'=>$pic));
+    $req = $bdd->prepare('INSERT INTO images (data, date_creation, id_pseudo) VALUES (:pic, NOW(), :id)');
+    $req->execute(array(':pic'=>$pic, ':id'=>$idUtilisateur));
 
     $response = array('success'=>true,'img'=>$pic);
     
