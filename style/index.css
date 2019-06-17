@@ -1,23 +1,28 @@
-body{
+body
+{
     background-color:#FAFAFA;
 }
 
-.img_polaroid{
+.img_polaroid
+{
     width: 95%;
     margin-left: 60px;
     margin-top: 110px;
 }
 
-.center{
+.center
+{
     display:flex;
 }
 
-.title_card{
+.title_card
+{
     font-family: cursive;
     font-size: 35px;
 }
 
-.btn-outline-primary {
+.btn-outline-primary 
+{
     color: #3897EF;
     border-color:#3897EF;
 }

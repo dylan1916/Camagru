@@ -1,13 +1,16 @@
-body{
+body
+{
     background-color: #FAFAFA;
 }
 
-.title_card{
+.title_card
+{
     font-family: cursive;
     font-size: 35px;
 }
 
-.btn-outline-primary {
+.btn-outline-primary
+{
     color: #3897EF;
     border-color:#3897EF;
 }

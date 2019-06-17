@@ -1,18 +1,22 @@
-body{
+body
+{
     background-color: #FAFAFA;
 }
 
-.list-group-item{
+.list-group-item
+{
     color: #3897EF;
     font-family: webkit-pictograph;
     font-size: 19px;
 }
 
-p{
+p
+{
     color: #909090;
 }
 
-#link{
+#link
+{
     color: #3897EF;
     font-family: webkit-pictograph;
     text-decoration:none; 

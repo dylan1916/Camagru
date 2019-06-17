@@ -4,8 +4,6 @@ require('includes/header1.php');
 require('includes/footer.php');
 require('config/database.php');
 
-//echo $_SESSION['id'];
-
 $sessionid = (int) $_SESSION['id'];
 if (isset($_SESSION['id']))
 {
@@ -17,7 +15,6 @@ else
 {
   header("Location: connexion.php");
 }
-
 
 ?>
 
@@ -45,7 +42,7 @@ else
 
       <center>
         <div id="button">
-            <button type="button" class="btn btn-outline-primary">Voir mes photos</button><br/><br/>
+            <a href="my_pictures.php"><button type="button" class="btn btn-outline-primary">Voir mes photos</button></a><br/><br/>
             <button type="button" class="btn btn-outline-primary" id="snap">Prendre une photo</button><br/><br/>
             <button type="button" class="btn btn-outline-primary" id="save">Sauvegarder la photo</button>
         </div>

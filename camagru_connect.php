@@ -4,31 +4,11 @@
  require('includes/footer.php');
  require('config/database.php');
 
-
-
-
-//  if (isset($_GET['id']) AND $_GET['id'] > 0)
-// {
-//      $getid = intval($_GET['id']);
-//      $requser = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
-//      $requser->execute(array($getid));
-//      $userinfo = $requser->fetch();
-// }
-// else
-// {
-// echo "IL FAUT SE CONNECTER POUR Y ACCEDER";
-// header("Location: http://localhost:8888/Camagru_part3/connexion.php");
-// }
-
-
 if (isset($_SESSION['id']))
 {
     $requser = $bdd->prepare("SELECT * FROM membres WHERE id = ?");
     $requser->execute(array($_SESSION['id']));
-    $user = $requser->fetch();
-    
-     //echo $_SESSION['id'];    
-  
+    $user = $requser->fetch();  
 }
 else
 {
@@ -40,11 +20,8 @@ $req = $bdd->prepare('SELECT * FROM images ORDER BY id DESC');
 $req->execute();
 while($d = $req->fetch(PDO::FETCH_OBJ)):
 
-
-
     $getid = (int) $_SESSION['id'];
     
-
     $article = $bdd->prepare("SELECT * FROM images WHERE id = ?");
     $article->execute(array($getid));
     $article = $article->fetch();
@@ -59,18 +36,14 @@ while($d = $req->fetch(PDO::FETCH_OBJ)):
     $dislikes->execute(array($d->id));
     $dislikes = $dislikes->rowCOunt();
 
-
     // commentaire
 
-    echo $_SESSION['pseudo'];
     $pseudo = $_SESSION['pseudo'];
     $idImg= $d->id;
-    echo $idImg;
-    // $idUtilisateur = $_SESSION['id'];
-    // echo $idUtilisateur;
-
+    
+    $commentaires = $bdd->prepare("SELECT * FROM commentaire WHERE id_images = ? ORDER BY id DESC");
+    $commentaires->execute(array($idImg));
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -86,18 +59,23 @@ while($d = $req->fetch(PDO::FETCH_OBJ)):
         <a style="text-decoration:none;" href="action.php?t=1&id=<?php echo $d->id;?>"><li class="list-group-item">J'aime (<?= $likes ?>)</li></a>
         <a style="text-decoration:none;" href="action.php?t=2&id=<?php echo $d->id;?>"><li class="list-group-item">J'aime pas (<?= $dislikes ?>)</li></a>
     </ul>
+    <br/>
+
     <!-- commentaire -->
-        <p class="card-text" align="left">Ajouter un commentaire ...<br/><br/><br/>
+
+    <h6 style="font-family:fantasy; color:#3897EF;">Les commentaires</h6>        
+        <?php
+        while ($c = $commentaires->fetch())
+        {
+        ?>
+        <hr>
+        <p class="card-text" align="left" style="font-family:fantasy;">
+        <b><?= $c['pseudo'];?> : </b><?= $c['commentaire'];?><br/>    
+        <?php
+        } 
+        ?>
+        <br/><br/>
         </p>
-
-
-    <!-- commentaire -->
-  <!-- <form action="" method="POST">
-        <input name="commentaire" type="text" size="63" placeholder="Ajouter un commentaire"><br/><br/>
-        <input type="hidden" name="pseudo">
-        <input type="submit" value="Valider" class="btn btn-outline-primary" name="submit_commentaire" onclick="myFunction()">
-    </form> -->
-
     <a style="text-decoration:none;" href="add_comment.php?id=<?php echo $idImg ?>"><input type="submit" value="Ajouter un commentaire" class="btn btn-outline-primary" name="add_commentaire"></a>
 
     <!-- //// -->

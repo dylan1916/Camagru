@@ -51,8 +51,7 @@ try
         pseudo VARCHAR(255) NOT NULL,
         commentaire TEXT NOT NULL,
         id_images INT (11) NOT NULL,
-        creation DATETIME NOT NULL
-    )");
+        creation DATETIME NOT NULL)");
 
 }
 catch (Exception $error)

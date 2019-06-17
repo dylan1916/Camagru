@@ -4,7 +4,6 @@ require('includes/footer.php');
 require('config/database.php');
 ?>
 
-
 <?php
 
     $req = $bdd->prepare('SELECT * FROM images ORDER BY id DESC');
@@ -38,8 +37,6 @@ require('config/database.php');
 </html>
 
 <?php endwhile;?>
-
-
 
 <head>
     <meta charset="UTF-8">
