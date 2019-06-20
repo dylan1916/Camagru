@@ -47,6 +47,51 @@ if (isset($_SESSION['id']))
     {
         header("Location: modify_account.php?id=".$_SESSION['id']);
     }
+
+    /////////////////////////////////////////////////////////////////////////////
+
+    $req = $bdd->prepare("SELECT * FROM membres WHERE id = ?");
+    $req->execute(array($_SESSION['id']));
+    while($d = $req->fetch(PDO::FETCH_OBJ)):
+
+        ///etat de la notif active ou pas
+        // echo $d->notif_mail;
+
+    //activation des notif qui envoie des mails
+    if (isset($_POST['notif']))
+    {
+        $insertnotif = $bdd->prepare("UPDATE membres SET notif_mail = ? WHERE id = ?");
+        $insertnotif->execute(array(1, $_SESSION['id']));
+    }
+    else
+    {
+        ?>
+            <script>
+                function myFunction() {
+                alert("Vous avez désactiver l'envoie de notifications !");
+                }
+            </script>
+        <?php
+    }
+
+    //desactiver les notif des commentaire qui envoie des mails
+    if (isset($_POST['no_notif']))
+    {
+        $insertnotif = $bdd->prepare("UPDATE membres SET notif_mail = ? WHERE id = ?");
+        $insertnotif->execute(array(0, $_SESSION['id']));
+    }
+    else
+    {
+        ?>
+            <script>
+                function myFunction() {
+                alert("L'envoie de notifications est activé !");
+                }
+            </script>
+        <?php
+        
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +111,7 @@ if (isset($_SESSION['id']))
         <br/>
         <center><h4 class="title_card">Modification du profil</h4></center>
         <br/>
-        <br/>
+        <!-- <br/> -->
         <center style="color: #84837D;">Mettez votre compte Camagru à jour.</center>
         <br/>
         <br/>
@@ -79,16 +124,23 @@ if (isset($_SESSION['id']))
                 <input type="password" class="form-control" placeholder="Mot de passe" name="newmdp1">
                 <br/>
                 <input type="password" class="form-control" placeholder="Reconfirmer le mot de passe" name="newmdp2">
+                <br/>
             </div>
-            <br/>
-            <br/>
             <center><input type="submit" class="btn btn-outline-primary" style="padding-left:17%; padding-right:17%;" value="Mettre à jour" onclick="myFunction()"></center>
-            <br/>
+            <hr width="80%">
+            <center><h6>Vous voulez supprimer votre compte ? <a style="text-decoration:none; color:#88C2F5;" href="delete_account.php?id=<?php echo $_SESSION['id'] ?>">Cliquer içi</a></h6></center>   
+        </form>
+        <hr width="80%">
+        <!-- notifications email -->
+        <form action="" method="post">
+            <input name="notif" type="submit" id="notif" class="btn btn-outline-primary" style="padding-left:9%; padding-right:9%; margin-left: 4px;" value="Activer les notifications" onclick="myFunction()">
+            <input name="no_notif" type="submit" id="nonotif" class="btn btn-outline-primary" style="padding-left:9%; padding-right:7%;" value="Désactiver les notifications" onclick="myFunction()">
         </form>
     </div>
-
+    <br/> <br/> <br/>
 </body>
 </html>
+<?php endwhile; ?>
 
 <?php
 }
@@ -97,3 +149,4 @@ else
 header("Location: connexion.php");
 }
 ?>
+

@@ -17,7 +17,8 @@ try
                 mail VARCHAR(255) NOT NULL,
                 motdepasse TEXT NOT NULL,
                 confirmkey VARCHAR(255) NOT NULL,
-                confirme INT(1) NOT NULL)");
+                confirme INT(1) NOT NULL,
+                notif_mail INT(1) NOT NULL)");
 
     //table recuperation mot de passe
     $bdd->query("CREATE TABLE recuperation(
@@ -31,7 +32,9 @@ try
         id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
         data LONGBLOB NOT NULL,
         date_creation datetime NOT NULL,
-        id_pseudo INT(11) NOT NULL)");
+        id_pseudo INT(11) NOT NULL,
+        pseudo VARCHAR(255) NOT NULL,
+        mail VARCHAR(255) NOT NULL)");
 
     //table likes
     $bdd->query("CREATE TABLE likes(
@@ -51,7 +54,8 @@ try
         pseudo VARCHAR(255) NOT NULL,
         commentaire TEXT NOT NULL,
         id_images INT (11) NOT NULL,
-        creation DATETIME NOT NULL)");
+        creation DATETIME NOT NULL,
+        mail VARCHAR (255) NOT NULL)");
 
 }
 catch (Exception $error)

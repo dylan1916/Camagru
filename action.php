@@ -64,12 +64,12 @@ if (isset($_GET['t'], $_GET['id']) AND !empty($_GET['t']) AND !empty($_GET['id']
     }
     else
     {
-        exit('Erreur fatale. <a href="http://localhost:8888/Camagru_part3/camagru_connect.php">Revenir à l\'acceuil</a>');
+        header('Location: connexion.php');
     }   
 }
 else
 {
-    exit('Erreur fatale. <a href="http://localhost:8888/Camagru_part3/camagru_connect.php">Revenir à l\'acceuil</a>');
+    header('Location: connexion.php');
 }
 
 ?>

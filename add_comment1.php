@@ -56,8 +56,6 @@ if (isset($_GET['id'], $_GET['p'], $_GET['m']) AND !empty($_GET['id']) AND !empt
 
                 if ($check_like)
                 {
-                    if ($notif_mail == 1)
-                    {
                     $ins= $bdd->prepare("INSERT INTO commentaire(pseudo, commentaire, id_images, creation, mail) VALUES(?, ?, ?, NOW(), ?)");
                     $ins->execute(array($pseudo, $commentaire, $idImg, $email));
 
@@ -73,14 +71,7 @@ if (isset($_GET['id'], $_GET['p'], $_GET['m']) AND !empty($_GET['id']) AND !empt
                                 </html>
                                 ';
     
-                                sendmail($subject , $message, $exp);   
-
-                    }
-                    elseif ($notif_mail == 0)
-                    {
-                        $ins= $bdd->prepare("INSERT INTO commentaire(pseudo, commentaire, id_images, creation, mail) VALUES(?, ?, ?, NOW(), ?)");
-                        $ins->execute(array($pseudo, $commentaire, $idImg, $email));
-                    }    
+                                sendmail($subject , $message, $exp);       
                 }
                 else
                 {
@@ -122,6 +113,16 @@ else
         </script>
     <?php
 }
+// ///////////////////////////////////////////////////////////////////////////
+// $requser = $bdd->prepare("SELECT * FROM membres WHERE id = ?");
+// $requser->execute(array($_SESSION['id']));
+//  while($d = $requser->fetch(PDO::FETCH_OBJ)):
+
+//     ///etat de la notif active ou pas
+//     $notif_mail = $d->notif_mail;
+//     // echo $notif_mail;
+// /////////////////////////////////////////////////////////////////////////////
+
 
 $req = $bdd->prepare('SELECT * FROM images WHERE id = ?');
 $req->execute(array($idImg));

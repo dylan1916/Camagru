@@ -17,30 +17,57 @@ else
     header("Location: connexion.php");
 }
 
-$id = $_SESSION['id'];
+$idImg = $_GET['id'];
+// echo $idImg;
 
-$req = $bdd->prepare('SELECT * FROM images WHERE id_pseudo = ? ORDER BY id DESC');
-$req->execute(array($id));
+$req = $bdd->prepare('SELECT * FROM images WHERE id = ?');
+$req->execute(array($idImg));
 while($d = $req->fetch(PDO::FETCH_OBJ)):
 
-$idImg = $d->id;
+//suppression de l'image
+if (isset($_POST['delete']))
+{
+    $del_req = $bdd->prepare("DELETE FROM images WHERE id = ?");
+    $del_req->execute(array($idImg));
 
+    ?>
+         <script>
+            function myFunction() {
+            alert("Le post a bien était supprimer !");
+            }
+        </script>
+    <?php
+}
+else
+{
+    ?>
+         <script>
+            function myFunction() {
+            alert("Veuillez cliquer sur le bouton pour pouvoir supprimer cette image !");
+            }
+        </script>
+    <?php
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <body>
+
 <br/><br/>
     <center>
-        <div class="card" style="width: 32rem;">
+        <div class="card" style="width: 40rem;">
             <img style="border: 1px solid black" src="<?php echo $d->data;?>" class="card-img-top">
             <div class="card-body">
-                <h5 class="card-title" style="font-family:fantasy; color:#3897EF;">Mes photos prises récemment</h5>
-                <a href="delete_picture.php?id=<?php echo $idImg ?>"><input type="submit" name="delete" class="btn btn-outline-primary"  value="Supprimer cette photo" onclick="myFunction()"></a>
+                <h5 class="card-title" style="font-family:fantasy; color:#3897EF;">Voulez-vous vraiment supprimer ce post ?</h5>
+                <form action="" method="post">
+                    <input type="submit" name="delete" class="btn btn-outline-primary"  value="Cliquer içi" onclick="myFunction()">
+                </form>
             </div>
         </div>
     </center>
     <br/><br/><br/><br/>
+    
 </body>
 </html>
 
@@ -53,5 +80,5 @@ $idImg = $d->id;
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style/header.css">
     <link rel="stylesheet" href="style/footer.css">
-    <title>Mes photos</title>
+    <title>Suppresion de l'image</title>
 </head>

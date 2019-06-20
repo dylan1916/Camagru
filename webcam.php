@@ -42,12 +42,19 @@ else
 
       <center>
         <div id="button">
-            <a href="my_pictures.php"><button type="button" class="btn btn-outline-primary">Voir mes photos</button></a><br/><br/>
+            <a href="my_pictures.php?id=<?php echo $sessionid ?>"><button type="button" class="btn btn-outline-primary">Voir mes photos</button></a><br/><br/>
             <button type="button" class="btn btn-outline-primary" id="snap">Prendre une photo</button><br/><br/>
             <button type="button" class="btn btn-outline-primary" id="save">Sauvegarder la photo</button>
         </div>
       </center>   
     <center><br/><br/><br><div id="result"></div></center>    
-    </div>  
+    </div>
+
+    <!-- upload d'image -->
+        <form action="" method="POST" enctype="multipart/form-data">
+            <input type="file" name="myfile">
+            <button name="btn">Upload</button>
+        </form>
+<br/><br/><br/>
 </body>
 </html>

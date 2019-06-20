@@ -40,9 +40,13 @@ while($d = $req->fetch(PDO::FETCH_OBJ)):
 
     $pseudo = $_SESSION['pseudo'];
     $idImg= $d->id;
+    $authorImg = $d->pseudo;
+    $mail = $d->mail;
     
     $commentaires = $bdd->prepare("SELECT * FROM commentaire WHERE id_images = ? ORDER BY id DESC");
     $commentaires->execute(array($idImg));
+
+    // echo $idImg;
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +80,7 @@ while($d = $req->fetch(PDO::FETCH_OBJ)):
         ?>
         <br/><br/>
         </p>
-    <a style="text-decoration:none;" href="add_comment.php?id=<?php echo $idImg ?>"><input type="submit" value="Ajouter un commentaire" class="btn btn-outline-primary" name="add_commentaire"></a>
+    <a style="text-decoration:none;" href="add_comment.php?id=<?php echo $idImg ?>&p=<?php echo $authorImg?>&m=<?php echo $mail ?>"><input type="submit" value="Ajouter un commentaire" class="btn btn-outline-primary" name="add_commentaire"></a>
 
     <!-- //// -->
 

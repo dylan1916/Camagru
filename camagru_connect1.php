@@ -78,7 +78,7 @@ while($d = $req->fetch(PDO::FETCH_OBJ)):
     <br/><br/>
     <!-- image -->
     <div class="card" style="width: 35rem;">
-    <img class="card-img-top" src="<?php echo $d->data;?>"  alt="Card image cap" style="border: 1px solid black">
+    <img class="card-img-top" src="images/<?php echo $d->data;?>"  alt="Card image cap" style="border: 1px solid black">
     <div class="card-body">
     <!-- like -->
     <ul class="list-group list-group-flush">

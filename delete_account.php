@@ -4,12 +4,24 @@ require('includes/header1.php');
 require('includes/footer.php');
 require('config/database.php');
 
+
 // verificatiob si l'utilisateur est connecté
 if (isset($_SESSION['id']))
 {
     $requser = $bdd->prepare("SELECT * FROM membres WHERE id = ?");
     $requser->execute(array($_SESSION['id']));
     $user = $requser->fetch();
+
+   $idUtilisateur = $_SESSION['id'];
+
+   //supprimer le membres
+   $del_req = $bdd->prepare("DELETE FROM membres WHERE id = ?"); 
+   $del_req->execute(array($idUtilisateur));
+   //supprimer limage
+   $del_req = $bdd->prepare("DELETE FROM images WHERE id_pseudo = ?"); 
+   $del_req->execute(array($idUtilisateur));
+   //rediriger l'utilisateur vers la page de creation de compte apres son ancien compte supprimer
+   header("Location: index.php");
       
 }
 else
@@ -17,34 +29,7 @@ else
     header("Location: connexion.php");
 }
 
-$id = $_SESSION['id'];
-
-$req = $bdd->prepare('SELECT * FROM images WHERE id_pseudo = ? ORDER BY id DESC');
-$req->execute(array($id));
-while($d = $req->fetch(PDO::FETCH_OBJ)):
-
-$idImg = $d->id;
-
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<body>
-<br/><br/>
-    <center>
-        <div class="card" style="width: 32rem;">
-            <img style="border: 1px solid black" src="<?php echo $d->data;?>" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title" style="font-family:fantasy; color:#3897EF;">Mes photos prises récemment</h5>
-                <a href="delete_picture.php?id=<?php echo $idImg ?>"><input type="submit" name="delete" class="btn btn-outline-primary"  value="Supprimer cette photo" onclick="myFunction()"></a>
-            </div>
-        </div>
-    </center>
-    <br/><br/><br/><br/>
-</body>
-</html>
-
-<?php endwhile;?>
 
 <head>
     <meta charset="UTF-8">
@@ -53,5 +38,5 @@ $idImg = $d->id;
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style/header.css">
     <link rel="stylesheet" href="style/footer.css">
-    <title>Mes photos</title>
+    <title>Suppresion de l'utilisateur</title>
 </head>

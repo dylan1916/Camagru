@@ -52,8 +52,8 @@ if (isset($_POST['recup_submit'], $_POST['recup_mail']))
                 }
 
                 $subject = 'Recuperation de mot de passe';
-                $exp = 'elietordjman98@gmail.com';
-                // Pour $exp modifier par la suite par $recup_mail
+                // $exp = 'elietordjman98@gmail.com';
+                $exp = $recup_mail;
                 $message = '
                 <html>
                     <body>

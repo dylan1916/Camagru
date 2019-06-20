@@ -7,7 +7,7 @@ require('config/database.php');
 if (isset($_POST['formconnexion']))
 {
     $mailconnect = htmlspecialchars($_POST['mailconnect']);
-    $mdpconnect = sha1($_POST['mdpconnect']);
+    $mdpconnect =  hash('whirlpool', $_POST['mdpconnect']);
 
     if (!empty($mailconnect) AND !empty($mdpconnect))
     {
