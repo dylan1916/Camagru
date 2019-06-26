@@ -8,7 +8,8 @@ require('config/database.php');
 
     $req = $bdd->prepare('SELECT * FROM images ORDER BY id DESC');
     $req->execute();
-    while($d = $req->fetch(PDO::FETCH_OBJ)):?>
+    while($d = $req->fetch(PDO::FETCH_OBJ)):
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +18,12 @@ require('config/database.php');
     <br/><br/>
     <!-- image -->
     <div class="card" style="width: 35rem;">
+    <?php if ($d->type_img == 1) {?>
     <img class="card-img-top" src="<?php echo $d->data;?>"  alt="Card image cap" style="border: 1px solid black">
+    <?php } else { ?>
+    <!-- ////aranger le /images -->
+    <img class="card-img-top" src="images/<?php echo $d->data;?>"  alt="Card image cap" style="border: 1px solid black">
+    <?php } ?>
     <div class="card-body">
     <!-- like -->
     <ul class="list-group list-group-flush">

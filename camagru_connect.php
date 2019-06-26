@@ -46,7 +46,8 @@ while($d = $req->fetch(PDO::FETCH_OBJ)):
     $commentaires = $bdd->prepare("SELECT * FROM commentaire WHERE id_images = ? ORDER BY id DESC");
     $commentaires->execute(array($idImg));
 
-    // echo $idImg;
+    ///pour le type img upload ou webcam
+    $typeImg = $d->type_img;
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +57,13 @@ while($d = $req->fetch(PDO::FETCH_OBJ)):
     <br/><br/>
     <!-- image -->
     <div class="card" style="width: 35rem;">
+    <?php if ($typeImg == 1) {?>
     <img class="card-img-top" src="<?php echo $d->data;?>"  alt="Card image cap" style="border: 1px solid black">
+    <?php } else { ?>
+    <!-- ////aranger le /images -->
+    <img class="card-img-top" src="images/<?php echo $d->data;?>"  alt="Card image cap" style="border: 1px solid black">
+    <?php } ?>
+    <!-- //////////////////////// -->
     <div class="card-body">
     <!-- like -->
     <ul class="list-group list-group-flush">

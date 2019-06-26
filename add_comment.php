@@ -132,10 +132,15 @@ while($d = $req->fetch(PDO::FETCH_OBJ)):
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <br/><br/>
+    <br/>
     <center>
         <div class="card" style="width: 32rem;">
+            <?php if ($d->type_img == 1) {?>
             <img style="border: 1px solid black" src="<?php echo $d->data;?>" class="card-img-top">
+            <?php } else { ?>
+            <!-- ////aranger le /images -->
+            <img class="card-img-top" src="images/<?php echo $d->data;?>"  alt="Card image cap" style="border: 1px solid black">
+            <?php } ?>
             <div class="card-body">
                 <h5 class="card-title" style="font-family:fantasy; color:#3897EF;">Commenter l'image publier par <?php echo $pseudoImg ?></h5>
                 <center>

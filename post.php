@@ -9,7 +9,7 @@ $mail = $_SESSION['mail'];
 if (isset($_POST['pic']))
 {
     $pic = strip_tags($_POST['pic']);
-    $req = $bdd->prepare('INSERT INTO images (data, date_creation, id_pseudo, pseudo, mail) VALUES (:pic, NOW(), :id, :pseudo, :mail)');
+    $req = $bdd->prepare('INSERT INTO images (data, date_creation, id_pseudo, pseudo, mail, type_img) VALUES (:pic, NOW(), :id, :pseudo, :mail, 1)');
     $req->execute(array(':pic'=>$pic, ':id'=>$idUtilisateur, ':pseudo'=>$pseudo, ':mail'=>$mail));
 
     $response = array('success'=>true,'img'=>$pic);

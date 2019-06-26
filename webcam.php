@@ -16,6 +16,33 @@ else
   header("Location: connexion.php");
 }
 
+///////////////////////////////////////////////////////////////
+$msg = "";
+$pseudo = $_SESSION['pseudo'];
+$mail = $_SESSION['mail'];
+
+//if upload button is pressed
+if (isset($_POST['upload']))
+{
+    //the path to store the uploaded image
+    $target = "images/".basename($_FILES['image']['name']);
+
+    //get all the submitted data from the form
+    $image = $_FILES['image']['name'];
+
+    $sql = $bdd->prepare("INSERT INTO images(data, date_creation, id_pseudo, pseudo, mail, type_img) VALUES (?, NOW(), ?, ?, ?, ? )");
+    $sql->execute(array($image, $sessionid, $pseudo, $mail, 2));
+
+    //push in the folderimages
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $target))
+    {
+        $msg = "Image upload sucessfully";
+    }
+    else
+    {
+        $msg = "There was a problem uploading image";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -51,10 +78,11 @@ else
     </div>
 
     <!-- upload d'image -->
-        <form action="" method="POST" enctype="multipart/form-data">
-            <input type="file" name="myfile">
-            <button name="btn">Upload</button>
-        </form>
+    <form method="POST" action="" enctype="multipart/form-data">
+        <input type="hidden" name="size" value="1000000">
+        <input type="file" name="image" id="">
+        <input type="submit" name="upload" value="Uploder une image" class="btn btn-outline-primary">
+    </form>  
 <br/><br/><br/>
 </body>
 </html>

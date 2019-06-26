@@ -24,6 +24,8 @@ $req->execute(array($id));
 while($d = $req->fetch(PDO::FETCH_OBJ)):
 
 $idImg = $d->id;
+///pour le type img upload ou webcam
+$typeImg = $d->type_img;
 
 ?>
 
@@ -33,7 +35,12 @@ $idImg = $d->id;
 <br/><br/>
     <center>
         <div class="card" style="width: 32rem;">
+            <?php if ($typeImg == 1) {?>
             <img style="border: 1px solid black" src="<?php echo $d->data;?>" class="card-img-top">
+            <?php } else { ?>
+            <!-- ////aranger le /images -->
+            <img class="card-img-top" src="images/<?php echo $d->data;?>"  alt="Card image cap" style="border: 1px solid black">
+            <?php } ?>
             <div class="card-body">
                 <h5 class="card-title" style="font-family:fantasy; color:#3897EF;">Mes photos prises récemment</h5>
                 <a href="delete_picture.php?id=<?php echo $idImg ?>"><input type="submit" name="delete" class="btn btn-outline-primary"  value="Supprimer cette photo" onclick="myFunction()"></a>

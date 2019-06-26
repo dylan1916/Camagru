@@ -34,7 +34,8 @@ try
         date_creation datetime NOT NULL,
         id_pseudo INT(11) NOT NULL,
         pseudo VARCHAR(255) NOT NULL,
-        mail VARCHAR(255) NOT NULL)");
+        mail VARCHAR(255) NOT NULL,
+        type_img INT (1) NOT NULL)");
 
     //table likes
     $bdd->query("CREATE TABLE likes(
