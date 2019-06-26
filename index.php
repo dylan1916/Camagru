@@ -32,45 +32,59 @@ if (isset($_POST['forminscription']))
                     {
                         if ((strlen($mdpnotH) >= 8) AND (strlen($mdp2notH) >= 8))
                         {
-                            if ($mdp == $mdp2)
-                            {         
-                                $longueurKey = 15;
-                                $key = "";
-                                for ($i = 1; $i < $longueurKey; $i++)
-                                {
-                                    $key .= mt_rand(0, 9);
+                            if ((preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $mdpnotH)) AND (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $mdp2notH)))
+                            {
+                                if ($mdp == $mdp2)
+                                {         
+                                    $longueurKey = 15;
+                                    $key = "";
+                                    for ($i = 1; $i < $longueurKey; $i++)
+                                    {
+                                        $key .= mt_rand(0, 9);
+                                    }
+        
+                                    $insertmbr = $bdd->prepare("INSERT INTO membres(pseudo, mail, motdepasse, confirmkey, confirme, notif_mail) VALUES (?, ?, ?, ?, ?, ?)");
+                                    $insertmbr->execute(array($pseudo, $mail, $mdp, $key, 0, $notif_mail));
+                                    
+                                    $subject = 'Confirmation de compte';
+                                    // $exp = 'elietordjman98@gmail.com';
+                                    $exp = $mail;
+                                    $message = '
+                                    <html>
+                                        <body>
+                                            <div align="center">
+                                            <a href="http://localhost:8888/Camagru%20part2/confirmation.php?pseudo='.urlencode($pseudo).'&key='.$key.'">Confirmez votre compte !</a>
+                                            </div>
+                                        </body>
+                                    </html>
+                                    ';
+        
+                                    sendmail($subject , $message, $exp);
+        
+                                    $erreur = "Votre compte à bien été crée ! Veuillez vous connectez.</a>";
+                                    // FAIRE ICI LE LOCATION POUR REDIRIGER SUR UNE PAGE QUAND LE COMPTE A ETE CREE
                                 }
-    
-                                $insertmbr = $bdd->prepare("INSERT INTO membres(pseudo, mail, motdepasse, confirmkey, confirme, notif_mail) VALUES (?, ?, ?, ?, ?, ?)");
-                                $insertmbr->execute(array($pseudo, $mail, $mdp, $key, 0, $notif_mail));
-                                
-                                $subject = 'Confirmation de compte';
-                                // $exp = 'elietordjman98@gmail.com';
-                                $exp = $mail;
-                                $message = '
-                                <html>
-                                    <body>
-                                        <div align="center">
-                                        <a href="http://localhost:8888/Camagru%20part2/confirmation.php?pseudo='.urlencode($pseudo).'&key='.$key.'">Confirmez votre compte !</a>
-                                        </div>
-                                    </body>
-                                </html>
-                                ';
-    
-                                sendmail($subject , $message, $exp);
-    
-                                $erreur = "Votre compte à bien été crée ! Veuillez vous connectez.</a>";
-                                // FAIRE ICI LE LOCATION POUR REDIRIGER SUR UNE PAGE QUAND LE COMPTE A ETE CREE
+                                else
+                                {
+                                    ?>
+                                        <script>
+                                        function myFunction() {
+                                        alert("Vos mots de passes ne correspondent pas !");
+                                        }
+                                        </script>
+                                    <?php
+                                }
                             }
                             else
                             {
                                 ?>
-                                    <script>
-                                    function myFunction() {
-                                    alert("Vos mots de passes ne correspondent pas !");
-                                    }
-                                    </script>
-                                <?php
+                                <script>
+                                function myFunction() {
+                                alert("Votre mot de passe doit faire au moins 8 charactères (1 majuscule, 1 minuscule, 1 chiffre, 1 charactère spécial) !");
+                                }
+                                </script>
+                            <?php
+
                             }
                         }
                         else
@@ -78,7 +92,7 @@ if (isset($_POST['forminscription']))
                             ?>
                                 <script>
                                 function myFunction() {
-                                alert("Votre mot de passe doit faire au moins 8 charactères !");
+                                alert("Votre mot de passe doit faire au moins 8 charactères (1 majuscule, 1 minuscule, 1 chiffre, 1 charactère spécial) !");
                                 }
                                 </script>
                             <?php
@@ -187,10 +201,10 @@ if (isset($erreur))
                 <input type="email" class="form-control" id="mail2" aria-describedby="emailHelp" placeholder="Confirmation E-mail" name="mail2" value="<?php if(isset($mail2)) { echo "$mail2"; } ?>">
             </div>
             <div class="form-group">
-                <input type="password" pattern=".{8,}"   required title="8 caracteres minimum et un chiffre" class="form-control" placeholder="Mot de passe" id="mdp" name="mdp">
+                <input type="password" pattern=".{8,}"   required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" class="form-control" placeholder="Mot de passe" id="mdp" name="mdp">
             </div>
             <div class="form-group">
-                <input type="password" pattern=".{8,}"   required title="8 caracteres minimum et un chiffre" class="form-control" placeholder="Reconfirmer le mot de passe" id="mdp2" name="mdp2">
+                <input type="password" pattern=".{8,}"   required title="8 caracteres minimum et un chiffre (chiffre, maj, minuscule, char special)" class="form-control" placeholder="Reconfirmer le mot de passe" id="mdp2" name="mdp2">
             </div>
             <center><input type="submit" class="btn btn-outline-primary" style="padding-left:19%;padding-right:19%;" name="forminscription" value="Suivant" onclick="myFunction()"></center>
             <br/>
