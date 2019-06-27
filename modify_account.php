@@ -28,36 +28,65 @@ if (isset($_SESSION['id']))
 
     if (isset($_POST['newmdp1']) AND !empty($_POST['newmdp1']) AND isset($_POST['newmdp2']) AND !empty($_POST['newmdp2']))
     {
+    $mdpnotH = $_POST['newmdp1'];
+    $mdp2notH = $_POST['newmdp2'];
     $mdp1 = hash('whirlpool', $_POST['newmdp1']);
     $mdp2 = hash('whirlpool', $_POST['newmdp2']);
 
-    $mdpnotH = $_POST['newmdp1'];
-    $mdp2notH = $_POST['newmdp2'];
-        
-    if ($mdp1 == $mdp2)
+    if ((strlen($mdpnotH) >= 8) AND (strlen($mdp2notH) >= 8))
     {
-        $insertmdp = $bdd->prepare("UPDATE membres SET motdepasse = ? WHERE  id = ?");
-        $insertmdp->execute(array($mdp1, $_SESSION['id']));
-        header("Location: modify_account.php?id=".$_SESSION['id']);
-                    
+        if ((preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $mdpnotH)) AND (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $mdp2notH)))
+        {
+            if ($mdp1 == $mdp2)
+            {
+                $insertmdp = $bdd->prepare("UPDATE membres SET motdepasse = ? WHERE  id = ?");
+                $insertmdp->execute(array($mdp1, $_SESSION['id']));
+                header("Location: modify_account.php?id=".$_SESSION['id']);       
+            }
+            else
+            {
+                ?>
+                    <script>
+                    function myFunction() {
+                    alert("Vos mots de passes ne correspondent pas !");
+                    }
+                    </script>
+                <?php
+            }
+        }
+        else
+        {
+
+            ?>
+                <script>
+                function myFunction() {
+                alert("Votre mot de passe doit faire au moins 8 charactères (1 majuscule, 1 minuscule, 1 chiffre, 1 charactère spécial) !");
+                }
+                </script>
+            <?php
+        }
+
     }
     else
     {
+
         ?>
             <script>
             function myFunction() {
-            alert("Vos mots de passes ne correspondent pas !");
+            alert("Votre mot de passe doit faire au moins 8 charactères (1 majuscule, 1 minuscule, 1 chiffre, 1 charactère spécial) !");
             }
             </script>
         <?php
     }
 }
 
-    
-    if (isset($_POST['newpseudo']) AND $_POST['newpseudo'] == $user['pseudo'])
-    {
-        header("Location: modify_account.php?id=".$_SESSION['id']);
-    }
+    // A VOIR////////////////////////////////////////////////
+
+
+    // if (isset($_POST['newpseudo']) AND $_POST['newpseudo'] == $user['pseudo'])
+    // {
+    //     header("Location: modify_account.php?id=".$_SESSION['id']);
+    // }
 
     /////////////////////////////////////////////////////////////////////////////
 
