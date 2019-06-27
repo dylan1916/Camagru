@@ -45,7 +45,7 @@ if (isset($_SESSION['id']))
     {
         ?>
             <script>
-            function myFunctionA() {
+            function myFunction() {
             alert("Vos mots de passes ne correspondent pas !");
             }
             </script>
@@ -117,20 +117,7 @@ if (isset($_SESSION['id']))
     <title>Modify Account</title>
 </head>
 <body>
-
-<br/>
-<?php
-if (isset($erreur))
-{
-    ?>
-        <div class="alert alert-success" role="alert">
-            <?php  echo $erreur ?>
-        </div>
-    <?php
-}
-?>
-
-<div class="card" style="width:40%; margin-left: 30%; margin-top: 7%;">
+<div class="card" style="width:40%; margin-left: 30%; margin-top: 5%;">
         <br/>
         <center><h4 class="title_card">Modification du profil</h4></center>
         <br/>
@@ -149,18 +136,19 @@ if (isset($erreur))
                 <input type="password" pattern=".{8,}" required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" class="form-control" placeholder="Reconfirmer le mot de passe" name="newmdp2">
                 <br/>
             </div>
-            <center><input type="submit" class="btn btn-outline-primary" style="padding-left:17%; padding-right:17%;" value="Mettre à jour" onclick="myFunctionA()"></center>
+            <center><input type="submit" class="btn btn-outline-primary" style="padding-left:17%; padding-right:17%;" value="Mettre à jour" onclick="myFunction()"></center>
             <hr width="80%">
             <center><h6>Vous voulez supprimer votre compte ? <a style="text-decoration:none; color:#88C2F5;" href="delete_account.php?id=<?php echo $_SESSION['id'] ?>">Cliquer içi</a></h6></center>   
         </form>
-        <hr width="80%">
+        <hr width="100%">
         <!-- notifications email -->
         <form action="" method="post">
             <input name="notif" type="submit" id="notif" class="btn btn-outline-primary" style="padding-left:9%; padding-right:9%; margin-left: 4px;" value="Activer les notifications" onclick="myFunctionNotif()">
             <input name="no_notif" type="submit" id="nonotif" class="btn btn-outline-primary" style="padding-left:9%; padding-right:7%;" value="Désactiver les notifications" onclick="myFunctionNotif()">
         </form>
+        <br/>
     </div>
-    <br/> <br/> <br/>
+    <br/> <br/><br/>
 </body>
 </html>
 <?php endwhile; ?>

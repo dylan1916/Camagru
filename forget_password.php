@@ -158,29 +158,55 @@ if (isset($_POST['change_submit']))
             $mdp = htmlspecialchars($_POST['change_mdp']);
             $mdpc = htmlspecialchars($_POST['change_mdpc']);
 
+
             if (!empty($mdp) AND !empty($mdpc))
             {
-                if ($mdp == $mdpc)
+                if ((strlen($mdp) >= 8) AND (strlen($mdpc) >= 8))
                 {
-                    // $mdp = sha1($mdp);
-                    $mdp = hash('whirlpool', $mdp);
+                    if ((preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $mdp)) AND (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $mdpc)))
+                    {
+                        if ($mdp == $mdpc)
+                        {
+                            $mdp = hash('whirlpool', $mdp);
 
-                    $ins_mdp = $bdd->prepare("UPDATE membres SET motdepasse = ? WHERE mail = ?");
-                    $ins_mdp->execute(array($mdp, $_SESSION['recup_mail']));
-                    $del_req = $bdd->prepare("DELETE FROM recuperation WHERE mail = ?");
-                    $del_req->execute(array($_SESSION['recup_mail']));
-                    header("Location: http://localhost:8888/Camagru_part3/connexion.php");
+                            $ins_mdp = $bdd->prepare("UPDATE membres SET motdepasse = ? WHERE mail = ?");
+                            $ins_mdp->execute(array($mdp, $_SESSION['recup_mail']));
+                            $del_req = $bdd->prepare("DELETE FROM recuperation WHERE mail = ?");
+                            $del_req->execute(array($_SESSION['recup_mail']));
+                            header("Location: http://localhost:8888/Camagru_part3/connexion.php");
+                        }
+                        else
+                        {  
+                            ?>
+                                <script>
+                                    function myFunction() {
+                                    alert("Vos mots de passes ne correspondent pas");
+                                    }
+                                </script>
+                            <?php 
+                        }
+                    }
+                    else
+                    {
+                        ?>
+                            <script>
+                                function myFunction() {
+                                alert("Votre mot de passe doit faire au moins 8 charactères (1 majuscule, 1 minuscule, 1 chiffre, 1 charactère spécial) !");
+                                }
+                            </script>
+                        <?php 
+                    }
                 }
                 else
-                {  
+                {
                     ?>
                         <script>
                             function myFunction() {
-                            alert("Vos mots de passes ne correspondent pas");
+                            alert("Votre mot de passe doit faire au moins 8 charactères (1 majuscule, 1 minuscule, 1 chiffre, 1 charactère spécial) !");
                             }
                         </script>
-                     <?php 
-                }
+                    <?php 
+                }                
             }
             else
             {
@@ -267,11 +293,11 @@ if (isset($_POST['change_submit']))
         <br/>
         <form method="POST" action="">
             <div class="form-group">
-                <input type="password" name="change_mdp" class="form-control" pattern=".{8,}" required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" placeholder="Nouveau mot de passse">
+                <input type="password" name="change_mdp"pattern=".{8,}" required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" class="form-control"  placeholder="Nouveau mot de passse">
             </div>
             <br/>
             <div class="form-group">
-                <input type="password" name="change_mdpc" class="form-control" pattern=".{8,}" required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" placeholder="Confirmation du mot de passse">
+                <input type="password" name="change_mdpc" pattern=".{8,}" required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" class="form-control" placeholder="Confirmation du mot de passse">
             </div>
             <br/>
             <br/>

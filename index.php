@@ -201,10 +201,10 @@ if (isset($erreur))
                 <input type="email" class="form-control" id="mail2" aria-describedby="emailHelp" placeholder="Confirmation E-mail" name="mail2" value="<?php if(isset($mail2)) { echo "$mail2"; } ?>">
             </div>
             <div class="form-group">
-                <input type="password" pattern=".{8,}"   required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" class="form-control" placeholder="Mot de passe" id="mdp" name="mdp">
+                <input type="password" pattern=".{8,}" required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" class="form-control" placeholder="Mot de passe" id="mdp" name="mdp">
             </div>
             <div class="form-group">
-                <input type="password" pattern=".{8,}"   required title="8 caracteres minimum et un chiffre (chiffre, maj, minuscule, char special)" class="form-control" placeholder="Reconfirmer le mot de passe" id="mdp2" name="mdp2">
+                <input type="password" pattern=".{8,}" required title="8 caracteres minimum et un chiffre (chiffre, maj, minuscule, char special)" class="form-control" placeholder="Reconfirmer le mot de passe" id="mdp2" name="mdp2">
             </div>
             <center><input type="submit" class="btn btn-outline-primary" style="padding-left:19%;padding-right:19%;" name="forminscription" value="Suivant" onclick="myFunction()"></center>
             <br/>
