@@ -60,7 +60,7 @@ if (isset($_POST['recup_submit'], $_POST['recup_mail']))
                         <div align="center">
                         Bonjour <b>'.$pseudo.'</b><br/>
                         Voici votre code de récupération : <b>'.$recup_code.'</b><br/><br/>
-                        Puis cliquer <a href="http://localhost:8888/Camagru%20part2/forget_password.php?section=code">ici</a>
+                        Puis cliquer <a href="http://localhost:8888/Camagru_part3/forget_password.php?section=code">ici</a>
                         </div>
                     </body>
                 </html>
@@ -117,7 +117,7 @@ if (isset($_POST['verif_submit'], $_POST['verif_code']))
         {
             $up_req = $bdd->prepare("UPDATE recuperation SET confirme = 1 WHERE mail = ?");
             $up_req->execute(array($_SESSION['recup_mail']));
-            header("Location: http://localhost:8888/Camagru%20part2/forget_password.php?section=changemdp");
+            header("Location: http://localhost:8888/Camagru_part3/forget_password.php?section=changemdp");
         }
         else
         {
@@ -162,13 +162,14 @@ if (isset($_POST['change_submit']))
             {
                 if ($mdp == $mdpc)
                 {
-                    $mdp = sha1($mdp);
+                    // $mdp = sha1($mdp);
+                    $mdp = hash('whirlpool', $mdp);
 
                     $ins_mdp = $bdd->prepare("UPDATE membres SET motdepasse = ? WHERE mail = ?");
                     $ins_mdp->execute(array($mdp, $_SESSION['recup_mail']));
                     $del_req = $bdd->prepare("DELETE FROM recuperation WHERE mail = ?");
                     $del_req->execute(array($_SESSION['recup_mail']));
-                    header("Location: http://localhost:8888/Camagru%20part2/connexion.php");
+                    header("Location: http://localhost:8888/Camagru_part3/connexion.php");
                 }
                 else
                 {  
@@ -266,11 +267,11 @@ if (isset($_POST['change_submit']))
         <br/>
         <form method="POST" action="">
             <div class="form-group">
-                <input type="password" name="change_mdp" class="form-control"  placeholder="Nouveau mot de passse">
+                <input type="password" name="change_mdp" class="form-control" pattern=".{8,}" required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" placeholder="Nouveau mot de passse">
             </div>
             <br/>
             <div class="form-group">
-                <input type="password" name="change_mdpc" class="form-control"  placeholder="Confirmation du mot de passse">
+                <input type="password" name="change_mdpc" class="form-control" pattern=".{8,}" required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" placeholder="Confirmation du mot de passse">
             </div>
             <br/>
             <br/>

@@ -28,21 +28,32 @@ if (isset($_SESSION['id']))
 
     if (isset($_POST['newmdp1']) AND !empty($_POST['newmdp1']) AND isset($_POST['newmdp2']) AND !empty($_POST['newmdp2']))
     {
-        $mdp1 = sha1($_POST['newmdp1']);
-        $mdp2 = sha1($_POST['newmdp2']);
+    $mdp1 = hash('whirlpool', $_POST['newmdp1']);
+    $mdp2 = hash('whirlpool', $_POST['newmdp2']);
 
-        if ($mdp1 == $mdp2)
-        {
-            $insertmdp = $bdd->prepare("UPDATE membres SET motdepasse = ? WHERE  id = ?");
-            $insertmdp->execute(array($mdp1, $_SESSION['id']));
-            header("Location: modify_account.php?id=".$_SESSION['id']);
-        }
-        else
-        {
-            $msg = "Vos deux mots de passes ne correspondent pas !";
-        }
+    $mdpnotH = $_POST['newmdp1'];
+    $mdp2notH = $_POST['newmdp2'];
+        
+    if ($mdp1 == $mdp2)
+    {
+        $insertmdp = $bdd->prepare("UPDATE membres SET motdepasse = ? WHERE  id = ?");
+        $insertmdp->execute(array($mdp1, $_SESSION['id']));
+        header("Location: modify_account.php?id=".$_SESSION['id']);
+                    
     }
+    else
+    {
+        ?>
+            <script>
+            function myFunctionA() {
+            alert("Vos mots de passes ne correspondent pas !");
+            }
+            </script>
+        <?php
+    }
+}
 
+    
     if (isset($_POST['newpseudo']) AND $_POST['newpseudo'] == $user['pseudo'])
     {
         header("Location: modify_account.php?id=".$_SESSION['id']);
@@ -67,7 +78,7 @@ if (isset($_SESSION['id']))
     {
         ?>
             <script>
-                function myFunction() {
+                function myFunctionNotif() {
                 alert("Vous avez désactiver l'envoie de notifications !");
                 }
             </script>
@@ -84,14 +95,13 @@ if (isset($_SESSION['id']))
     {
         ?>
             <script>
-                function myFunction() {
+                function myFunctionNotif() {
                 alert("L'envoie de notifications est activé !");
                 }
             </script>
         <?php
         
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -107,6 +117,19 @@ if (isset($_SESSION['id']))
     <title>Modify Account</title>
 </head>
 <body>
+
+<br/>
+<?php
+if (isset($erreur))
+{
+    ?>
+        <div class="alert alert-success" role="alert">
+            <?php  echo $erreur ?>
+        </div>
+    <?php
+}
+?>
+
 <div class="card" style="width:40%; margin-left: 30%; margin-top: 7%;">
         <br/>
         <center><h4 class="title_card">Modification du profil</h4></center>
@@ -121,20 +144,20 @@ if (isset($_SESSION['id']))
                 <br/>
                 <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="E-mail" name="newmail" value="<?php echo $user['mail']; ?>">
                 <br/>
-                <input type="password" class="form-control" placeholder="Mot de passe" name="newmdp1">
+                <input type="password" pattern=".{8,}" required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" class="form-control" placeholder="Mot de passe" name="newmdp1">
                 <br/>
-                <input type="password" class="form-control" placeholder="Reconfirmer le mot de passe" name="newmdp2">
+                <input type="password" pattern=".{8,}" required title="8 caracteres minimum (chiffre, maj, minuscule, char special)" class="form-control" placeholder="Reconfirmer le mot de passe" name="newmdp2">
                 <br/>
             </div>
-            <center><input type="submit" class="btn btn-outline-primary" style="padding-left:17%; padding-right:17%;" value="Mettre à jour" onclick="myFunction()"></center>
+            <center><input type="submit" class="btn btn-outline-primary" style="padding-left:17%; padding-right:17%;" value="Mettre à jour" onclick="myFunctionA()"></center>
             <hr width="80%">
             <center><h6>Vous voulez supprimer votre compte ? <a style="text-decoration:none; color:#88C2F5;" href="delete_account.php?id=<?php echo $_SESSION['id'] ?>">Cliquer içi</a></h6></center>   
         </form>
         <hr width="80%">
         <!-- notifications email -->
         <form action="" method="post">
-            <input name="notif" type="submit" id="notif" class="btn btn-outline-primary" style="padding-left:9%; padding-right:9%; margin-left: 4px;" value="Activer les notifications" onclick="myFunction()">
-            <input name="no_notif" type="submit" id="nonotif" class="btn btn-outline-primary" style="padding-left:9%; padding-right:7%;" value="Désactiver les notifications" onclick="myFunction()">
+            <input name="notif" type="submit" id="notif" class="btn btn-outline-primary" style="padding-left:9%; padding-right:9%; margin-left: 4px;" value="Activer les notifications" onclick="myFunctionNotif()">
+            <input name="no_notif" type="submit" id="nonotif" class="btn btn-outline-primary" style="padding-left:9%; padding-right:7%;" value="Désactiver les notifications" onclick="myFunctionNotif()">
         </form>
     </div>
     <br/> <br/> <br/>
