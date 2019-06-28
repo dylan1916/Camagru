@@ -60,6 +60,21 @@ if (isset($_POST['upload']))
     <title>Webcam</title>
 </head>
 <body>
+    <!-- filtres -->
+    <center>
+        <img onclick="myFunction('img/f.png')" id="bird" src="img/f.png" width="100" class="item">
+		<img onclick="myFunction('img/glc.png')" id="glc" src="img/glc.png"  width="100" class="item">
+		<img onclick="myFunction('img/dog.png')" id="dog" src="img/dog.png"  width="100" class="item">
+        <img onclick="myFunction('img/ang.png')" id="angel" src="img/ang.png" width="100" class="item">
+        
+        <!-- upload d'image -->
+         <form method="POST" action="" enctype="multipart/form-data">
+            <input type="hidden" name="size" value="1000000">
+            <input type="file" name="image" id="">
+            <input type="submit" name="upload" value="Uploder une image" class="btn btn-outline-primary">
+        </form>  
+    </center>
+   
     <div class="container-fluid"> 
       <div id="content">
         <br/>
@@ -76,13 +91,7 @@ if (isset($_POST['upload']))
       </center>   
     <center><br/><br/><br><div id="result"></div></center>    
     </div>
-
-    <!-- upload d'image -->
-    <form method="POST" action="" enctype="multipart/form-data">
-        <input type="hidden" name="size" value="1000000">
-        <input type="file" name="image" id="">
-        <input type="submit" name="upload" value="Uploder une image" class="btn btn-outline-primary">
-    </form>  
+  
 <br/><br/><br/>
 </body>
 </html>
