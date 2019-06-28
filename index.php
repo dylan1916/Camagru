@@ -19,7 +19,7 @@ if (isset($_POST['forminscription']))
         //securité niveau mdp
         $mdpnotH = $_POST['mdp'];
         $mdp2notH = $_POST['mdp2'];
-        if ($pseudolength <= 255)
+        if ($pseudolength <= 255 AND $pseudolength >= 6)
         {
             if ($mail == $mail2)
             {
@@ -61,7 +61,7 @@ if (isset($_POST['forminscription']))
         
                                     sendmail($subject , $message, $exp);
         
-                                    $erreur = "Votre compte à bien été crée ! Veuillez vous connectez.</a>";
+                                    $erreur = "Votre compte à bien été crée ! Veuillez confrimer votre compte puis vous connectez.</a>";
                                     // FAIRE ICI LE LOCATION POUR REDIRIGER SUR UNE PAGE QUAND LE COMPTE A ETE CREE
                                 }
                                 else
@@ -136,7 +136,7 @@ if (isset($_POST['forminscription']))
             ?>
                 <script>
                 function myFunction() {
-                alert("Votre pseudo ne doit pas dépasser 255 caractères !");
+                alert("Votre pseudo ne doit pas dépasser 255 caractères et doit etre superieur à 6 caractère !");
                 }
                 </script>
             <?php

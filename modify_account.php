@@ -13,9 +13,23 @@ if (isset($_SESSION['id']))
     if (isset($_POST['newpseudo']) AND !empty($_POST['newpseudo']) AND $_POST['newpseudo'] != $user['pseudo'])
     {
         $newpseudo = htmlspecialchars($_POST['newpseudo']);
-        $insertpseudo = $bdd->prepare("UPDATE membres SET pseudo = ? WHERE id = ?");
-        $insertpseudo->execute(array($newpseudo, $_SESSION['id']));
-        header("Location: modify_account.php?id=".$_SESSION['id']);
+        
+        if (strlen($newpseudo) >= 6 AND strlen($newpseudo) <= 255)
+        {
+            $insertpseudo = $bdd->prepare("UPDATE membres SET pseudo = ? WHERE id = ?");
+            $insertpseudo->execute(array($newpseudo, $_SESSION['id']));
+            header("Location: modify_account.php?id=".$_SESSION['id']);
+        }
+        else
+        {
+            ?>
+                <script>
+                    function myFunction() {
+                    alert("Vos mots de passes ne correspondent pVotre pseudo ne doit pas dépasser 255 caractères et doit etre superieur à 6 caractère !");
+                    }
+                </script>
+            <?php
+        }
     }
 
     if (isset($_POST['newmail']) AND !empty($_POST['newmail']) AND $_POST['newmail'] != $user['mail'])
@@ -78,6 +92,16 @@ if (isset($_SESSION['id']))
             </script>
         <?php
     }
+}
+else
+{
+    ?>
+         <script>
+            function myFunction() {
+            alert("Veuillez insérer toutes les bonnes modifications !");
+            }
+        </script>
+    <?php
 }
 
     // A VOIR////////////////////////////////////////////////
